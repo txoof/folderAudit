@@ -1,0 +1,14 @@
+Author: Aaron Ciuffo
+Contact: aaron.ciuffo@gmail.com
+
+Find the latest version of this project on github:
+
+
+This program audits a supplied google drive folder and provides an audit of files that are contained in that folder. The resulting audit is uploaded to google drive as a google sheet and provides the following columns:
+
+webViewLink	owners	  mimeType	name	size	modifiedTime	id
+
+Audit this file using the template provided here:
+https://docs.google.com/spreadsheets/d/1YK498BXE5wKhPcGJQ1DaiI0z0JRlHI7JBZ1kpz5KdZ0/edit?usp=sharing
+
+Copy the data into the tab "Sheet1" and use the Filter tab for analysis.
