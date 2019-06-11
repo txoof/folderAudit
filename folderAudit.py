@@ -3,7 +3,7 @@
 # coding: utf-8
 
 
-# In[3]:
+# In[1]:
 
 
 #get_ipython().magic(u'load_ext autoreload')
@@ -14,7 +14,7 @@
 
 
 
-# In[16]:
+# In[2]:
 
 
 #get_ipython().magic(u'nbconvert')
@@ -22,7 +22,7 @@
 
 
 
-# In[4]:
+# In[3]:
 
 
 import csv
@@ -45,7 +45,7 @@ from gdrive.gdrive import googledrive, GDriveError
 
 
 
-# In[5]:
+# In[4]:
 
 
 def resource_path(relative_path):
@@ -61,7 +61,7 @@ def resource_path(relative_path):
 
 
 
-# In[6]:
+# In[5]:
 
 
 def fileToList(inputfile, stripWhitespace=True):
@@ -85,7 +85,7 @@ def fileToList(inputfile, stripWhitespace=True):
 
 
 
-# In[7]:
+# In[6]:
 
 
 def setup_logging(
@@ -142,7 +142,7 @@ def setup_logging(
 
 
 
-# In[8]:
+# In[7]:
 
 
 def getConfiguration(cfgfile):
@@ -190,7 +190,7 @@ def getConfiguration(cfgfile):
 
 
 
-# In[9]:
+# In[8]:
 
 
 def doExit(exit_level=0, testing=False):
@@ -202,7 +202,7 @@ def doExit(exit_level=0, testing=False):
 
 
 
-# In[10]:
+# In[9]:
 
 
 def recurseFolders(myDrive, parents="", fieldNames='parents, id, name', fileList=[], skipped=[], depth=0):
@@ -229,7 +229,7 @@ def recurseFolders(myDrive, parents="", fieldNames='parents, id, name', fileList
 
 
 
-# In[11]:
+# In[10]:
 
 
 def auditFolder(myDrive=None, parents='', name='NO NAME FOLDER'):
@@ -283,7 +283,7 @@ def auditFolder(myDrive=None, parents='', name='NO NAME FOLDER'):
 
 
 
-# In[15]:
+# In[11]:
 
 
 def uploadSheet(myDrive, file):
@@ -306,7 +306,7 @@ def uploadSheet(myDrive, file):
 
 
 
-# In[13]:
+# In[21]:
 
 
 def main():
@@ -424,12 +424,14 @@ def main():
         folderName = None
         folderID = None
         
-        match = re.match('https:\/\/drive.google.com(?:\/.*)+\/([a-zA-Z0-9-]+)\W{0,}$', folderURL)
+#         match = re.match('https:\/\/drive.google.com(?:\/.*)+\/([a-zA-Z0-9-]+)\W{0,}$', folderURL)
+        match = re.match('https:\/\/drive.google.com\/.*(?:\w+\/|=)([a-zA-Z0-9_-]+)', folderURL)
         if not match:
             print('Invlaid URL; try again')
             continue
         else:
             folderID = match[1]
+            print('folderID=', folderID)
             
         try:
             result = myDrive.getprops(fileId=folderID, fields="name, mimeType")
@@ -457,7 +459,7 @@ def main():
 
 
 
-# In[14]:
+# In[22]:
 
 
 if __name__ == "__main__":
