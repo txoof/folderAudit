@@ -9,6 +9,6 @@ This program audits a supplied google drive folder and provides an audit of file
 webViewLink	owners	  mimeType	name	size	modifiedTime	id
 
 Audit this file using the template provided here:
-https://docs.google.com/spreadsheets/d/1YK498BXE5wKhPcGJQ1DaiI0z0JRlHI7JBZ1kpz5KdZ0/edit?usp=sharing
+https://docs.google.com/spreadsheets/d/1K66dfftcbf6IQO_fPDPOli57OTCG9tNsq0xeQMKl1Yo/copy
 
 Copy the data into the tab "Sheet1" and use the Filter tab for analysis.
