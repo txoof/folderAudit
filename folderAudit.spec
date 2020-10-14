@@ -1,13 +1,19 @@
-# -*- mode: python -*-
+# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
+# see link below for build DistributionNotFound issues
+# https://github.com/googleapis/google-api-python-client/issues/876#issuecomment-617248185
+from PyInstaller.utils.hooks import copy_metadata
+extra_files = copy_metadata('google-api-python-client')
+extra_files.append(('./resources', './resources'))
 
 a = Analysis(['folderAudit.py'],
-             pathex=['/Users/aciuffo/Documents/src/folderAudit'],
+
+             pathex=['./'],
              binaries=[],
-             datas=[('./resources', './resources')],
-             hiddenimports=[],
+             datas=extra_files,
+             hiddenimports=['google-api-python-client', 'googleapiclient'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -27,6 +33,7 @@ exe = EXE(pyz,
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
-          upx=False,
+          upx=True,
+          upx_exclude=[],
           runtime_tmpdir=None,
           console=True )
