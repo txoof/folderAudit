@@ -1,28 +1,16 @@
-#!/usr/bin/env ipython
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 
-# In[1]:
-
-
-#get_ipython().magic(u'load_ext autoreload')
-#get_ipython().magic(u'autoreload 2')
-
-#get_ipython().magic(u'alias nbconvert nbconvert folderAudit.ipynb')
 
 
 
 
-# In[2]:
-
-
-#get_ipython().magic(u'nbconvert')
 
 
 
 
-# In[3]:
+
 
 
 import csv
@@ -41,11 +29,11 @@ from googleapiclient import http
 from pathlib import Path
 from gdrive.auth import getCredentials
 from gdrive.gdrive import googledrive, GDriveError
+import constants
 
 
 
 
-# In[4]:
 
 
 def resource_path(relative_path):
@@ -61,7 +49,6 @@ def resource_path(relative_path):
 
 
 
-# In[5]:
 
 
 def fileToList(inputfile, stripWhitespace=True):
@@ -85,7 +72,6 @@ def fileToList(inputfile, stripWhitespace=True):
 
 
 
-# In[6]:
 
 
 def setup_logging(
@@ -142,7 +128,6 @@ def setup_logging(
 
 
 
-# In[7]:
 
 
 def getConfiguration(cfgfile):
@@ -190,7 +175,6 @@ def getConfiguration(cfgfile):
 
 
 
-# In[8]:
 
 
 def doExit(exit_level=0, testing=False):
@@ -202,7 +186,6 @@ def doExit(exit_level=0, testing=False):
 
 
 
-# In[9]:
 
 
 def recurseFolders(myDrive, parents="", fieldNames='parents, id, name', fileList=[], skipped=[], depth=0):
@@ -229,7 +212,6 @@ def recurseFolders(myDrive, parents="", fieldNames='parents, id, name', fileList
 
 
 
-# In[10]:
 
 
 def auditFolder(myDrive=None, parents='', name='NO NAME FOLDER'):
@@ -283,7 +265,6 @@ def auditFolder(myDrive=None, parents='', name='NO NAME FOLDER'):
 
 
 
-# In[11]:
 
 
 def uploadSheet(myDrive, file):
@@ -306,12 +287,13 @@ def uploadSheet(myDrive, file):
 
 
 
-# In[21]:
 
 
 def main():
     testing = True
-    version = '00.01 - 2019.05.28'
+#     version = '00.01 - 2019.05.28'
+    version = constants.version
+    audit_url = constants.audit_url
     appName = 'folderAudit'
     
     cfgfile = appName+'.ini'
@@ -373,11 +355,12 @@ def main():
     about_list = fileToList(about, False)
     wrapper = textwrap.TextWrapper(replace_whitespace=True, drop_whitespace=True, width=65)
     print(('{} - Version: {}'.format(appName, version)))
+
     for line in about_list:
         print(('\n'.join(wrapper.wrap(text=line))))
         
-    
-    logger.setLevel('DEBUG')
+    print(f'Audit Template: {audit_url}')        
+#     logger.setLevel('DEBUG')
         
    # assume that the configuration is NOT ok and that user will want to reconfigure
     proceed = True
@@ -459,11 +442,17 @@ def main():
 
 
 
-# In[22]:
 
 
 if __name__ == "__main__":
     file = main()
     
+
+
+
+
+
+
+
 
 
