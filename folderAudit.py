@@ -8,11 +8,6 @@
 
 
 
-
-
-
-
-
 import csv
 import os
 import sys
@@ -282,6 +277,8 @@ def uploadSheet(myDrive, file):
                                         fields='id, webViewLink').execute()
     if file:
         print('File uploaded to: {}'.format(file.get('webViewLink')))
+        print(f'Use the Audit Template here to help review the data: {constants.audit_url}')        
+
     return(file)
 
 
