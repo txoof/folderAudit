@@ -1,10 +1,11 @@
 #!/bin/bash
-APPNAME="folderAudit"
-DATESTR=`date +%F_%H.%M`
 
 pipenv run pyinstaller --clean *.spec
 
+codesign -s aaron.ciuffo@gmail.com ./dist/folderAudit
+
 pushd ./dist
+
 tar cvzf ../folderAudit_latest.tgz .
 popd
 
