@@ -17,7 +17,10 @@ import configuration
 import textwrap
 import csv
 import re
+import unicodedata
 import datetime
+import tempfile
+
 from humanfriendly import prompts
 
 from googleapiclient import http
@@ -25,6 +28,27 @@ from pathlib import Path
 from gdrive.auth import getCredentials
 from gdrive.gdrive import googledrive, GDriveError
 import constants
+
+
+
+
+
+
+def slugify(value, allow_unicode=False):
+    """
+    Taken from https://github.com/django/django/blob/master/django/utils/text.py
+    Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated
+    dashes to single dashes. Remove characters that aren't alphanumerics,
+    underscores, or hyphens. Convert to lowercase. Also strip leading and
+    trailing whitespace, dashes, and underscores.
+    """
+    value = str(value)
+    if allow_unicode:
+        value = unicodedata.normalize('NFKC', value)
+    else:
+        value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+    value = re.sub(r'[^\w\s-]', '', value.lower())
+    return re.sub(r'[-\s]+', '-', value).strip('-_')
 
 
 
@@ -210,11 +234,18 @@ def recurseFolders(myDrive, parents="", fieldNames='parents, id, name', fileList
 
 
 def auditFolder(myDrive=None, parents='', name='NO NAME FOLDER'):
+    name = slugify(name)
+    temp_dir = tempfile.mkdtemp()
+
     date = datetime.date.today().strftime("%Y-%m-%d")
-    outputFile = date+'_'+name+'_Ownership Audit.csv'
-    outputPath = Path.home()/'Desktop'/outputFile
-    skippedFile = date+name+'_Ownership Audit Skipped Folders.csv'
-    skippedPath = Path.home()/'Desktop'/skippedFile
+#     outputFile = date+'_'+name+'_Ownership Audit.csv'
+    outputFile = f'{date}_{name}_Ownership Audit.csv'
+    outputPath = Path(temp_dir)/outputFile
+    skippedFile = f'{date}{name}_Owneership Audit Skipped Folders.csv'
+    skippedPath = Path(temp_dir)/skippedFile
+#     outputPath = Path.home()/'Desktop'/outputFile
+#     skippedFile = date+name+'_Ownership Audit Skipped Folders.csv'
+#     skippedPath = Path.home()/'Desktop'/skippedFile
     fieldNames = ['webViewLink', 'owners', 'mimeType', 'name', 'size', 'modifiedTime', 'id']
     
     
